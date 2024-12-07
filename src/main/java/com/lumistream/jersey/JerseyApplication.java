@@ -19,20 +19,20 @@ public class JerseyApplication {
 
     public static void main(String[] args) {
 
-	    // Set the system property to bind Jetty to all interfaces (IPv4 and IPv6)
-	    System.setProperty("jetty.host", "0.0.0.0");
+	// Set the system property to bind Jetty to all interfaces (IPv4 and IPv6)
+	System.setProperty("jetty.host", "0.0.0.0");
 
         // Create the Jetty server
         //Server server = new Server(8080);
-	    Server server = new Server();
+        Server server = new Server();
 
-	    // Create a ServerConnector (for HTTP requests)
-	    ServerConnector connector = new ServerConnector(server);
-	    connector.setHost("0.0.0.0"); // Bind to all network interfaces (IPv4 and IPv6)
+	// Create a ServerConnector (for HTTP requests)
+	ServerConnector connector = new ServerConnector(server);
+	connector.setHost("0.0.0.0"); // Bind to all network interfaces (IPv4 and IPv6)
         connector.setPort(8080); // Set the port to 8080
-	    server.addConnector(connector);  // add connector to the server
+	server.addConnector(connector);  // add connector to the server
 
-	    // create the servletContexthandler
+	// create the servletContexthandler
         ServletContextHandler servletContextHandler = new ServletContextHandler(NO_SESSIONS);
 
         servletContextHandler.setContextPath("/");
