@@ -19,12 +19,12 @@ public class MovieResources {
 	System.out.println("Title received: " + title);
         Movie movie = MovieOperations.getMovie(title);
         if (movie == null) {
-            // return 404 if the movie is not found
+            // debbug  - return 404 if the movie is not found
             return Response.status(Response.Status.NOT_FOUND)
                            .entity("{\"error\": \"Movie not found\"}")
                            .build();
         }
-        // return 200 OK with the movie object as JSON
+        // debbug - return 200 OK with the movie object as JSON
         return Response.ok(movie).build();
     }
 
