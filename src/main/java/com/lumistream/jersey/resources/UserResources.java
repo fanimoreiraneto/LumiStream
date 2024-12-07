@@ -11,7 +11,8 @@ import com.lumistream.jersey.user.UserSupervisor;
 public class UserResources {
 
     private final Integer APP1 = 1;
-    private static String URL = "jdbc:sqlite:LumiStream/src/main/databases/user.db";
+    // private static String URL = "jdbc:sqlite:LumiStream/src/main/databases/user.db";
+    private static String URL = "jdbc:sqlite:/src/main/databases/user.db";
 
     @Path("/addUser")
     @POST
