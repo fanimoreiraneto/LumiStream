@@ -1,0 +1,380 @@
+diff --git a/.gradle/8.3/checksums/checksums.lock b/.gradle/8.3/checksums/checksums.lock
+index 42f59ba..872c121 100644
+Binary files a/.gradle/8.3/checksums/checksums.lock and b/.gradle/8.3/checksums/checksums.lock differ
+diff --git a/.gradle/8.3/checksums/md5-checksums.bin b/.gradle/8.3/checksums/md5-checksums.bin
+index 874d21d..92f5345 100644
+Binary files a/.gradle/8.3/checksums/md5-checksums.bin and b/.gradle/8.3/checksums/md5-checksums.bin differ
+diff --git a/.gradle/8.3/checksums/sha1-checksums.bin b/.gradle/8.3/checksums/sha1-checksums.bin
+index 30bd645..4b84c6f 100644
+Binary files a/.gradle/8.3/checksums/sha1-checksums.bin and b/.gradle/8.3/checksums/sha1-checksums.bin differ
+diff --git a/.gradle/8.3/executionHistory/executionHistory.bin b/.gradle/8.3/executionHistory/executionHistory.bin
+index e0a8759..dca6dff 100644
+Binary files a/.gradle/8.3/executionHistory/executionHistory.bin and b/.gradle/8.3/executionHistory/executionHistory.bin differ
+diff --git a/.gradle/8.3/executionHistory/executionHistory.lock b/.gradle/8.3/executionHistory/executionHistory.lock
+index 3b691a7..8d2e604 100644
+Binary files a/.gradle/8.3/executionHistory/executionHistory.lock and b/.gradle/8.3/executionHistory/executionHistory.lock differ
+diff --git a/.gradle/8.3/fileHashes/fileHashes.bin b/.gradle/8.3/fileHashes/fileHashes.bin
+index d86e778..23064a0 100644
+Binary files a/.gradle/8.3/fileHashes/fileHashes.bin and b/.gradle/8.3/fileHashes/fileHashes.bin differ
+diff --git a/.gradle/8.3/fileHashes/fileHashes.lock b/.gradle/8.3/fileHashes/fileHashes.lock
+index eeed466..a45d870 100644
+Binary files a/.gradle/8.3/fileHashes/fileHashes.lock and b/.gradle/8.3/fileHashes/fileHashes.lock differ
+diff --git a/.gradle/8.3/fileHashes/resourceHashesCache.bin b/.gradle/8.3/fileHashes/resourceHashesCache.bin
+index 89a0adb..33ccdb5 100644
+Binary files a/.gradle/8.3/fileHashes/resourceHashesCache.bin and b/.gradle/8.3/fileHashes/resourceHashesCache.bin differ
+diff --git a/.gradle/buildOutputCleanup/buildOutputCleanup.lock b/.gradle/buildOutputCleanup/buildOutputCleanup.lock
+index a68724e..d14bd51 100644
+Binary files a/.gradle/buildOutputCleanup/buildOutputCleanup.lock and b/.gradle/buildOutputCleanup/buildOutputCleanup.lock differ
+diff --git a/.gradle/buildOutputCleanup/outputFiles.bin b/.gradle/buildOutputCleanup/outputFiles.bin
+index f0bac54..3d3bc8f 100644
+Binary files a/.gradle/buildOutputCleanup/outputFiles.bin and b/.gradle/buildOutputCleanup/outputFiles.bin differ
+diff --git a/.gradle/file-system.probe b/.gradle/file-system.probe
+index 3b64504..7ec3081 100644
+Binary files a/.gradle/file-system.probe and b/.gradle/file-system.probe differ
+diff --git a/build.gradle b/build.gradle
+index 1883a67..12ddc9d 100644
+--- a/build.gradle
++++ b/build.gradle
+@@ -36,6 +36,7 @@ dependencies {
+     implementation "org.glassfish.jersey.inject:jersey-hk2:${jerseyVersion}"
+     implementation "org.xerial:sqlite-jdbc:3.47.0.0"
+     implementation "org.bouncycastle:bcprov-jdk18on:1.79"
++    implementation 'com.google.firebase:firebase-admin:9.1.1'
+ }
+ 
+ jar {
+diff --git a/build/classes/java/main/com/lumistream/jersey/JerseyApplication.class b/build/classes/java/main/com/lumistream/jersey/JerseyApplication.class
+index bc7cc86..b687d89 100644
+Binary files a/build/classes/java/main/com/lumistream/jersey/JerseyApplication.class and b/build/classes/java/main/com/lumistream/jersey/JerseyApplication.class differ
+diff --git a/build/classes/java/main/com/lumistream/jersey/resources/UserResources.class b/build/classes/java/main/com/lumistream/jersey/resources/UserResources.class
+index ae073aa..9dff735 100644
+Binary files a/build/classes/java/main/com/lumistream/jersey/resources/UserResources.class and b/build/classes/java/main/com/lumistream/jersey/resources/UserResources.class differ
+diff --git a/build/classes/java/main/com/lumistream/jersey/user/User.class b/build/classes/java/main/com/lumistream/jersey/user/User.class
+index 7c3f50e..b8fbd75 100644
+Binary files a/build/classes/java/main/com/lumistream/jersey/user/User.class and b/build/classes/java/main/com/lumistream/jersey/user/User.class differ
+diff --git a/build/distributions/jersey-with-embedded-jetty.tar b/build/distributions/jersey-with-embedded-jetty.tar
+index e0211df..20ef797 100644
+Binary files a/build/distributions/jersey-with-embedded-jetty.tar and b/build/distributions/jersey-with-embedded-jetty.tar differ
+diff --git a/build/distributions/jersey-with-embedded-jetty.zip b/build/distributions/jersey-with-embedded-jetty.zip
+index 93bf546..8bbcac4 100644
+Binary files a/build/distributions/jersey-with-embedded-jetty.zip and b/build/distributions/jersey-with-embedded-jetty.zip differ
+diff --git a/build/libs/jersey-with-embedded-jetty.jar b/build/libs/jersey-with-embedded-jetty.jar
+index 17e1529..9762a8c 100644
+Binary files a/build/libs/jersey-with-embedded-jetty.jar and b/build/libs/jersey-with-embedded-jetty.jar differ
+diff --git a/build/scripts/jersey-with-embedded-jetty b/build/scripts/jersey-with-embedded-jetty
+index d06ac86..ef202bb 100755
+--- a/build/scripts/jersey-with-embedded-jetty
++++ b/build/scripts/jersey-with-embedded-jetty
+@@ -112,7 +112,7 @@ case "$( uname )" in                #(
+   NONSTOP* )        nonstop=true ;;
+ esac
+ 
+-CLASSPATH=$APP_HOME/lib/jersey-with-embedded-jetty.jar:$APP_HOME/lib/slf4j-simple-1.7.25.jar:$APP_HOME/lib/slf4j-api-1.7.25.jar:$APP_HOME/lib/jersey-container-jetty-http-2.27.jar:$APP_HOME/lib/jetty-servlet-9.4.6.v20170531.jar:$APP_HOME/lib/jetty-security-9.4.6.v20170531.jar:$APP_HOME/lib/jetty-server-9.4.7.v20170914.jar:$APP_HOME/lib/jersey-container-servlet-core-2.27.jar:$APP_HOME/lib/jersey-server-2.27.jar:$APP_HOME/lib/jersey-media-json-jackson-2.27.jar:$APP_HOME/lib/jersey-hk2-2.27.jar:$APP_HOME/lib/sqlite-jdbc-3.47.0.0.jar:$APP_HOME/lib/bcprov-jdk18on-1.79.jar:$APP_HOME/lib/javax.servlet-api-3.1.0.jar:$APP_HOME/lib/jetty-http-9.4.7.v20170914.jar:$APP_HOME/lib/jetty-io-9.4.7.v20170914.jar:$APP_HOME/lib/jersey-client-2.27.jar:$APP_HOME/lib/jersey-media-jaxb-2.27.jar:$APP_HOME/lib/jersey-common-2.27.jar:$APP_HOME/lib/jersey-entity-filtering-2.27.jar:$APP_HOME/lib/javax.ws.rs-api-2.1.jar:$APP_HOME/lib/hk2-locator-2.5.0-b42.jar:$APP_HOME/lib/hk2-api-2.5.0-b42.jar:$APP_HOME/lib/hk2-utils-2.5.0-b42.jar:$APP_HOME/lib/javax.annotation-api-1.2.jar:$APP_HOME/lib/javax.inject-2.5.0-b42.jar:$APP_HOME/lib/validation-api-1.1.0.Final.jar:$APP_HOME/lib/jetty-util-9.4.7.v20170914.jar:$APP_HOME/lib/jetty-continuation-9.4.7.v20170914.jar:$APP_HOME/lib/jackson-module-jaxb-annotations-2.8.10.jar:$APP_HOME/lib/jackson-databind-2.8.10.jar:$APP_HOME/lib/jackson-annotations-2.8.10.jar:$APP_HOME/lib/osgi-resource-locator-1.0.1.jar:$APP_HOME/lib/jackson-core-2.8.10.jar:$APP_HOME/lib/aopalliance-repackaged-2.5.0-b42.jar:$APP_HOME/lib/javassist-3.22.0-CR2.jar:$APP_HOME/lib/javax.inject-1.jar
++CLASSPATH=$APP_HOME/lib/jersey-with-embedded-jetty.jar:$APP_HOME/lib/slf4j-simple-1.7.25.jar:$APP_HOME/lib/firebase-admin-9.1.1.jar:$APP_HOME/lib/slf4j-api-2.0.3.jar:$APP_HOME/lib/jersey-container-jetty-http-2.27.jar:$APP_HOME/lib/jetty-servlet-9.4.6.v20170531.jar:$APP_HOME/lib/jetty-security-9.4.6.v20170531.jar:$APP_HOME/lib/jetty-server-9.4.7.v20170914.jar:$APP_HOME/lib/jersey-container-servlet-core-2.27.jar:$APP_HOME/lib/jersey-server-2.27.jar:$APP_HOME/lib/jersey-media-json-jackson-2.27.jar:$APP_HOME/lib/jersey-hk2-2.27.jar:$APP_HOME/lib/sqlite-jdbc-3.47.0.0.jar:$APP_HOME/lib/bcprov-jdk18on-1.79.jar:$APP_HOME/lib/javax.servlet-api-3.1.0.jar:$APP_HOME/lib/jetty-http-9.4.7.v20170914.jar:$APP_HOME/lib/jetty-io-9.4.7.v20170914.jar:$APP_HOME/lib/jersey-client-2.27.jar:$APP_HOME/lib/jersey-media-jaxb-2.27.jar:$APP_HOME/lib/jersey-common-2.27.jar:$APP_HOME/lib/jersey-entity-filtering-2.27.jar:$APP_HOME/lib/javax.ws.rs-api-2.1.jar:$APP_HOME/lib/hk2-locator-2.5.0-b42.jar:$APP_HOME/lib/google-cloud-storage-2.14.0.jar:$APP_HOME/lib/google-cloud-firestore-3.7.0.jar:$APP_HOME/lib/proto-google-cloud-firestore-bundle-v1-3.7.0.jar:$APP_HOME/lib/api-common-2.2.1.jar:$APP_HOME/lib/hk2-api-2.5.0-b42.jar:$APP_HOME/lib/hk2-utils-2.5.0-b42.jar:$APP_HOME/lib/proto-google-cloud-firestore-v1-3.7.0.jar:$APP_HOME/lib/javax.annotation-api-1.3.2.jar:$APP_HOME/lib/javax.inject-2.5.0-b42.jar:$APP_HOME/lib/validation-api-1.1.0.Final.jar:$APP_HOME/lib/jetty-util-9.4.7.v20170914.jar:$APP_HOME/lib/jetty-continuation-9.4.7.v20170914.jar:$APP_HOME/lib/jackson-module-jaxb-annotations-2.13.4.jar:$APP_HOME/lib/jackson-databind-2.13.4.jar:$APP_HOME/lib/jackson-core-2.13.4.jar:$APP_HOME/lib/jackson-annotations-2.13.4.jar:$APP_HOME/lib/google-api-client-gson-2.0.0.jar:$APP_HOME/lib/google-api-client-2.0.0.jar:$APP_HOME/lib/google-auth-library-oauth2-http-1.12.1.jar:$APP_HOME/lib/google-oauth-client-1.34.1.jar:$APP_HOME/lib/google-http-client-gson-1.42.2.jar:$APP_HOME/lib/google-http-client-apache-v2-1.42.2.jar:$APP_HOME/lib/google-http-client-1.42.2.jar:$APP_HOME/lib/opencensus-contrib-http-util-0.31.1.jar:$APP_HOME/lib/guava-31.1-jre.jar:$APP_HOME/lib/netty-codec-http-4.1.84.Final.jar:$APP_HOME/lib/netty-handler-4.1.84.Final.jar:$APP_HOME/lib/netty-codec-4.1.84.Final.jar:$APP_HOME/lib/netty-transport-native-unix-common-4.1.84.Final.jar:$APP_HOME/lib/netty-transport-4.1.84.Final.jar:$APP_HOME/lib/osgi-resource-locator-1.0.1.jar:$APP_HOME/lib/aopalliance-repackaged-2.5.0-b42.jar:$APP_HOME/lib/javassist-3.22.0-CR2.jar:$APP_HOME/lib/httpclient-4.5.13.jar:$APP_HOME/lib/httpcore-4.4.15.jar:$APP_HOME/lib/jsr305-3.0.2.jar:$APP_HOME/lib/j2objc-annotations-1.3.jar:$APP_HOME/lib/opencensus-api-0.31.1.jar:$APP_HOME/lib/auto-value-annotations-1.10.jar:$APP_HOME/lib/google-auth-library-credentials-1.12.1.jar:$APP_HOME/lib/failureaccess-1.0.1.jar:$APP_HOME/lib/listenablefuture-9999.0-empty-to-avoid-conflict-with-guava.jar:$APP_HOME/lib/google-http-client-jackson2-1.42.2.jar:$APP_HOME/lib/google-api-services-storage-v1-rev20220705-2.0.0.jar:$APP_HOME/lib/gson-2.9.1.jar:$APP_HOME/lib/google-cloud-core-2.8.22.jar:$APP_HOME/lib/google-cloud-core-http-2.8.22.jar:$APP_HOME/lib/google-http-client-appengine-1.42.2.jar:$APP_HOME/lib/gax-httpjson-0.104.4.jar:$APP_HOME/lib/google-cloud-core-grpc-2.8.22.jar:$APP_HOME/lib/grpc-core-1.50.1.jar:$APP_HOME/lib/annotations-4.1.1.4.jar:$APP_HOME/lib/animal-sniffer-annotations-1.22.jar:$APP_HOME/lib/gax-2.19.4.jar:$APP_HOME/lib/gax-grpc-2.19.4.jar:$APP_HOME/lib/grpc-alts-1.50.1.jar:$APP_HOME/lib/grpc-grpclb-1.50.1.jar:$APP_HOME/lib/conscrypt-openjdk-uber-2.5.2.jar:$APP_HOME/lib/grpc-context-1.50.1.jar:$APP_HOME/lib/proto-google-iam-v1-1.6.4.jar:$APP_HOME/lib/protobuf-java-3.21.8.jar:$APP_HOME/lib/protobuf-java-util-3.21.8.jar:$APP_HOME/lib/proto-google-common-protos-2.9.6.jar:$APP_HOME/lib/threetenbp-1.6.3.jar:$APP_HOME/lib/proto-google-cloud-storage-v2-2.14.0-alpha.jar:$APP_HOME/lib/grpc-google-cloud-storage-v2-2.14.0-alpha.jar:$APP_HOME/lib/grpc-protobuf-1.50.1.jar:$APP_HOME/lib/gapic-google-cloud-storage-v2-2.14.0-alpha.jar:$APP_HOME/lib/grpc-api-1.50.1.jar:$APP_HOME/lib/grpc-netty-shaded-1.50.1.jar:$APP_HOME/lib/perfmark-api-0.25.0.jar:$APP_HOME/lib/grpc-auth-1.50.1.jar:$APP_HOME/lib/grpc-stub-1.50.1.jar:$APP_HOME/lib/grpc-googleapis-1.50.1.jar:$APP_HOME/lib/checker-qual-3.26.0.jar:$APP_HOME/lib/grpc-xds-1.50.1.jar:$APP_HOME/lib/opencensus-proto-0.2.0.jar:$APP_HOME/lib/grpc-services-1.50.1.jar:$APP_HOME/lib/re2j-1.6.jar:$APP_HOME/lib/grpc-google-iam-v1-1.6.4.jar:$APP_HOME/lib/grpc-protobuf-lite-1.50.1.jar:$APP_HOME/lib/commons-logging-1.2.jar:$APP_HOME/lib/commons-codec-1.15.jar:$APP_HOME/lib/opencensus-contrib-grpc-util-0.31.1.jar:$APP_HOME/lib/error_prone_annotations-2.16.jar:$APP_HOME/lib/netty-buffer-4.1.84.Final.jar:$APP_HOME/lib/netty-resolver-4.1.84.Final.jar:$APP_HOME/lib/netty-common-4.1.84.Final.jar:$APP_HOME/lib/javax.inject-1.jar:$APP_HOME/lib/jakarta.xml.bind-api-2.3.3.jar:$APP_HOME/lib/jakarta.activation-api-1.2.2.jar
+ 
+ 
+ # Determine the Java command to use to start the JVM.
+diff --git a/build/scripts/jersey-with-embedded-jetty.bat b/build/scripts/jersey-with-embedded-jetty.bat
+index b84af98..1f5f821 100644
+--- a/build/scripts/jersey-with-embedded-jetty.bat
++++ b/build/scripts/jersey-with-embedded-jetty.bat
+@@ -68,7 +68,7 @@ goto fail
+ :execute
+ @rem Setup the command line
+ 
+-set CLASSPATH=%APP_HOME%\lib\jersey-with-embedded-jetty.jar;%APP_HOME%\lib\slf4j-simple-1.7.25.jar;%APP_HOME%\lib\slf4j-api-1.7.25.jar;%APP_HOME%\lib\jersey-container-jetty-http-2.27.jar;%APP_HOME%\lib\jetty-servlet-9.4.6.v20170531.jar;%APP_HOME%\lib\jetty-security-9.4.6.v20170531.jar;%APP_HOME%\lib\jetty-server-9.4.7.v20170914.jar;%APP_HOME%\lib\jersey-container-servlet-core-2.27.jar;%APP_HOME%\lib\jersey-server-2.27.jar;%APP_HOME%\lib\jersey-media-json-jackson-2.27.jar;%APP_HOME%\lib\jersey-hk2-2.27.jar;%APP_HOME%\lib\sqlite-jdbc-3.47.0.0.jar;%APP_HOME%\lib\bcprov-jdk18on-1.79.jar;%APP_HOME%\lib\javax.servlet-api-3.1.0.jar;%APP_HOME%\lib\jetty-http-9.4.7.v20170914.jar;%APP_HOME%\lib\jetty-io-9.4.7.v20170914.jar;%APP_HOME%\lib\jersey-client-2.27.jar;%APP_HOME%\lib\jersey-media-jaxb-2.27.jar;%APP_HOME%\lib\jersey-common-2.27.jar;%APP_HOME%\lib\jersey-entity-filtering-2.27.jar;%APP_HOME%\lib\javax.ws.rs-api-2.1.jar;%APP_HOME%\lib\hk2-locator-2.5.0-b42.jar;%APP_HOME%\lib\hk2-api-2.5.0-b42.jar;%APP_HOME%\lib\hk2-utils-2.5.0-b42.jar;%APP_HOME%\lib\javax.annotation-api-1.2.jar;%APP_HOME%\lib\javax.inject-2.5.0-b42.jar;%APP_HOME%\lib\validation-api-1.1.0.Final.jar;%APP_HOME%\lib\jetty-util-9.4.7.v20170914.jar;%APP_HOME%\lib\jetty-continuation-9.4.7.v20170914.jar;%APP_HOME%\lib\jackson-module-jaxb-annotations-2.8.10.jar;%APP_HOME%\lib\jackson-databind-2.8.10.jar;%APP_HOME%\lib\jackson-annotations-2.8.10.jar;%APP_HOME%\lib\osgi-resource-locator-1.0.1.jar;%APP_HOME%\lib\jackson-core-2.8.10.jar;%APP_HOME%\lib\aopalliance-repackaged-2.5.0-b42.jar;%APP_HOME%\lib\javassist-3.22.0-CR2.jar;%APP_HOME%\lib\javax.inject-1.jar
++set CLASSPATH=%APP_HOME%\lib\jersey-with-embedded-jetty.jar;%APP_HOME%\lib\slf4j-simple-1.7.25.jar;%APP_HOME%\lib\firebase-admin-9.1.1.jar;%APP_HOME%\lib\slf4j-api-2.0.3.jar;%APP_HOME%\lib\jersey-container-jetty-http-2.27.jar;%APP_HOME%\lib\jetty-servlet-9.4.6.v20170531.jar;%APP_HOME%\lib\jetty-security-9.4.6.v20170531.jar;%APP_HOME%\lib\jetty-server-9.4.7.v20170914.jar;%APP_HOME%\lib\jersey-container-servlet-core-2.27.jar;%APP_HOME%\lib\jersey-server-2.27.jar;%APP_HOME%\lib\jersey-media-json-jackson-2.27.jar;%APP_HOME%\lib\jersey-hk2-2.27.jar;%APP_HOME%\lib\sqlite-jdbc-3.47.0.0.jar;%APP_HOME%\lib\bcprov-jdk18on-1.79.jar;%APP_HOME%\lib\javax.servlet-api-3.1.0.jar;%APP_HOME%\lib\jetty-http-9.4.7.v20170914.jar;%APP_HOME%\lib\jetty-io-9.4.7.v20170914.jar;%APP_HOME%\lib\jersey-client-2.27.jar;%APP_HOME%\lib\jersey-media-jaxb-2.27.jar;%APP_HOME%\lib\jersey-common-2.27.jar;%APP_HOME%\lib\jersey-entity-filtering-2.27.jar;%APP_HOME%\lib\javax.ws.rs-api-2.1.jar;%APP_HOME%\lib\hk2-locator-2.5.0-b42.jar;%APP_HOME%\lib\google-cloud-storage-2.14.0.jar;%APP_HOME%\lib\google-cloud-firestore-3.7.0.jar;%APP_HOME%\lib\proto-google-cloud-firestore-bundle-v1-3.7.0.jar;%APP_HOME%\lib\api-common-2.2.1.jar;%APP_HOME%\lib\hk2-api-2.5.0-b42.jar;%APP_HOME%\lib\hk2-utils-2.5.0-b42.jar;%APP_HOME%\lib\proto-google-cloud-firestore-v1-3.7.0.jar;%APP_HOME%\lib\javax.annotation-api-1.3.2.jar;%APP_HOME%\lib\javax.inject-2.5.0-b42.jar;%APP_HOME%\lib\validation-api-1.1.0.Final.jar;%APP_HOME%\lib\jetty-util-9.4.7.v20170914.jar;%APP_HOME%\lib\jetty-continuation-9.4.7.v20170914.jar;%APP_HOME%\lib\jackson-module-jaxb-annotations-2.13.4.jar;%APP_HOME%\lib\jackson-databind-2.13.4.jar;%APP_HOME%\lib\jackson-core-2.13.4.jar;%APP_HOME%\lib\jackson-annotations-2.13.4.jar;%APP_HOME%\lib\google-api-client-gson-2.0.0.jar;%APP_HOME%\lib\google-api-client-2.0.0.jar;%APP_HOME%\lib\google-auth-library-oauth2-http-1.12.1.jar;%APP_HOME%\lib\google-oauth-client-1.34.1.jar;%APP_HOME%\lib\google-http-client-gson-1.42.2.jar;%APP_HOME%\lib\google-http-client-apache-v2-1.42.2.jar;%APP_HOME%\lib\google-http-client-1.42.2.jar;%APP_HOME%\lib\opencensus-contrib-http-util-0.31.1.jar;%APP_HOME%\lib\guava-31.1-jre.jar;%APP_HOME%\lib\netty-codec-http-4.1.84.Final.jar;%APP_HOME%\lib\netty-handler-4.1.84.Final.jar;%APP_HOME%\lib\netty-codec-4.1.84.Final.jar;%APP_HOME%\lib\netty-transport-native-unix-common-4.1.84.Final.jar;%APP_HOME%\lib\netty-transport-4.1.84.Final.jar;%APP_HOME%\lib\osgi-resource-locator-1.0.1.jar;%APP_HOME%\lib\aopalliance-repackaged-2.5.0-b42.jar;%APP_HOME%\lib\javassist-3.22.0-CR2.jar;%APP_HOME%\lib\httpclient-4.5.13.jar;%APP_HOME%\lib\httpcore-4.4.15.jar;%APP_HOME%\lib\jsr305-3.0.2.jar;%APP_HOME%\lib\j2objc-annotations-1.3.jar;%APP_HOME%\lib\opencensus-api-0.31.1.jar;%APP_HOME%\lib\auto-value-annotations-1.10.jar;%APP_HOME%\lib\google-auth-library-credentials-1.12.1.jar;%APP_HOME%\lib\failureaccess-1.0.1.jar;%APP_HOME%\lib\listenablefuture-9999.0-empty-to-avoid-conflict-with-guava.jar;%APP_HOME%\lib\google-http-client-jackson2-1.42.2.jar;%APP_HOME%\lib\google-api-services-storage-v1-rev20220705-2.0.0.jar;%APP_HOME%\lib\gson-2.9.1.jar;%APP_HOME%\lib\google-cloud-core-2.8.22.jar;%APP_HOME%\lib\google-cloud-core-http-2.8.22.jar;%APP_HOME%\lib\google-http-client-appengine-1.42.2.jar;%APP_HOME%\lib\gax-httpjson-0.104.4.jar;%APP_HOME%\lib\google-cloud-core-grpc-2.8.22.jar;%APP_HOME%\lib\grpc-core-1.50.1.jar;%APP_HOME%\lib\annotations-4.1.1.4.jar;%APP_HOME%\lib\animal-sniffer-annotations-1.22.jar;%APP_HOME%\lib\gax-2.19.4.jar;%APP_HOME%\lib\gax-grpc-2.19.4.jar;%APP_HOME%\lib\grpc-alts-1.50.1.jar;%APP_HOME%\lib\grpc-grpclb-1.50.1.jar;%APP_HOME%\lib\conscrypt-openjdk-uber-2.5.2.jar;%APP_HOME%\lib\grpc-context-1.50.1.jar;%APP_HOME%\lib\proto-google-iam-v1-1.6.4.jar;%APP_HOME%\lib\protobuf-java-3.21.8.jar;%APP_HOME%\lib\protobuf-java-util-3.21.8.jar;%APP_HOME%\lib\proto-google-common-protos-2.9.6.jar;%APP_HOME%\lib\threetenbp-1.6.3.jar;%APP_HOME%\lib\proto-google-cloud-storage-v2-2.14.0-alpha.jar;%APP_HOME%\lib\grpc-google-cloud-storage-v2-2.14.0-alpha.jar;%APP_HOME%\lib\grpc-protobuf-1.50.1.jar;%APP_HOME%\lib\gapic-google-cloud-storage-v2-2.14.0-alpha.jar;%APP_HOME%\lib\grpc-api-1.50.1.jar;%APP_HOME%\lib\grpc-netty-shaded-1.50.1.jar;%APP_HOME%\lib\perfmark-api-0.25.0.jar;%APP_HOME%\lib\grpc-auth-1.50.1.jar;%APP_HOME%\lib\grpc-stub-1.50.1.jar;%APP_HOME%\lib\grpc-googleapis-1.50.1.jar;%APP_HOME%\lib\checker-qual-3.26.0.jar;%APP_HOME%\lib\grpc-xds-1.50.1.jar;%APP_HOME%\lib\opencensus-proto-0.2.0.jar;%APP_HOME%\lib\grpc-services-1.50.1.jar;%APP_HOME%\lib\re2j-1.6.jar;%APP_HOME%\lib\grpc-google-iam-v1-1.6.4.jar;%APP_HOME%\lib\grpc-protobuf-lite-1.50.1.jar;%APP_HOME%\lib\commons-logging-1.2.jar;%APP_HOME%\lib\commons-codec-1.15.jar;%APP_HOME%\lib\opencensus-contrib-grpc-util-0.31.1.jar;%APP_HOME%\lib\error_prone_annotations-2.16.jar;%APP_HOME%\lib\netty-buffer-4.1.84.Final.jar;%APP_HOME%\lib\netty-resolver-4.1.84.Final.jar;%APP_HOME%\lib\netty-common-4.1.84.Final.jar;%APP_HOME%\lib\javax.inject-1.jar;%APP_HOME%\lib\jakarta.xml.bind-api-2.3.3.jar;%APP_HOME%\lib\jakarta.activation-api-1.2.2.jar
+ 
+ 
+ @rem Execute jersey-with-embedded-jetty
+diff --git a/build/tmp/compileJava/compileTransaction/stash-dir/MovieOperations.class.uniqueId0 b/build/tmp/compileJava/compileTransaction/stash-dir/MovieOperations.class.uniqueId0
+deleted file mode 100644
+index 6193dda..0000000
+Binary files a/build/tmp/compileJava/compileTransaction/stash-dir/MovieOperations.class.uniqueId0 and /dev/null differ
+diff --git a/build/tmp/compileJava/compileTransaction/stash-dir/MovieResources.class.uniqueId1 b/build/tmp/compileJava/compileTransaction/stash-dir/MovieResources.class.uniqueId1
+deleted file mode 100644
+index 2f16f1c..0000000
+Binary files a/build/tmp/compileJava/compileTransaction/stash-dir/MovieResources.class.uniqueId1 and /dev/null differ
+diff --git a/build/tmp/compileJava/previous-compilation-data.bin b/build/tmp/compileJava/previous-compilation-data.bin
+index 1b63de4..dae3494 100644
+Binary files a/build/tmp/compileJava/previous-compilation-data.bin and b/build/tmp/compileJava/previous-compilation-data.bin differ
+diff --git a/src/main/databases/user.db b/src/main/databases/user.db
+index e316b35..1080e37 100644
+Binary files a/src/main/databases/user.db and b/src/main/databases/user.db differ
+diff --git a/src/main/java/com/lumistream/jersey/JerseyApplication.java b/src/main/java/com/lumistream/jersey/JerseyApplication.java
+index 5819dcf..f8fc217 100644
+--- a/src/main/java/com/lumistream/jersey/JerseyApplication.java
++++ b/src/main/java/com/lumistream/jersey/JerseyApplication.java
+@@ -18,43 +18,56 @@ public class JerseyApplication {
+     public static UserSupervisor sup = UserSupervisor.getInstance();
+ 
+     public static void main(String[] args) {
++        Server server = null;
+ 
+-	// Set the system property to bind Jetty to all interfaces (IPv4 and IPv6)
+-	System.setProperty("jetty.host", "0.0.0.0");
++        try {
++            // Initialize Firebase
++            FirebaseInitializer.initializeFirebase();
+ 
+-        // Create the Jetty server
+-        //Server server = new Server(8080);
+-        Server server = new Server();
++            // Set the system property to bind Jetty to all interfaces (IPv4 and IPv6)
++            System.setProperty("jetty.host", "0.0.0.0");
+ 
+-	// Create a ServerConnector (for HTTP requests)
+-	ServerConnector connector = new ServerConnector(server);
+-	connector.setHost("0.0.0.0"); // Bind to all network interfaces (IPv4 and IPv6)
+-        connector.setPort(8080); // Set the port to 8080
+-	server.addConnector(connector);  // add connector to the server
++            // Create the Jetty server
++            //Server server = new Server(8080);
++            server = new Server();
+ 
+-	// create the servletContexthandler
+-        ServletContextHandler servletContextHandler = new ServletContextHandler(NO_SESSIONS);
++            // Create a ServerConnector (for HTTP requests)
++            ServerConnector connector = new ServerConnector(server);
++            connector.setHost("0.0.0.0"); // Bind to all network interfaces (IPv4 and IPv6)
++            connector.setPort(8080); // Set the port to 8080
++            server.addConnector(connector);  // add connector to the server
+ 
+-        servletContextHandler.setContextPath("/");
+-        server.setHandler(servletContextHandler);
++            // create the servletContexthandler
++            ServletContextHandler servletContextHandler = new ServletContextHandler(NO_SESSIONS);
++            servletContextHandler.setContextPath("/");
++            server.setHandler(servletContextHandler);
+ 
+-        ServletHolder servletHolder = servletContextHandler.addServlet(ServletContainer.class, "/api/*");
+-        servletHolder.setInitOrder(0);
+-        servletHolder.setInitParameter(
++            ServletHolder servletHolder = servletContextHandler.addServlet(ServletContainer.class, "/api/*");
++            servletHolder.setInitOrder(0);
++            servletHolder.setInitParameter(
+                 "jersey.config.server.provider.packages",
+                 "com.lumistream.jersey.resources"
+-        );
+-
+-        try {
++            );
++        
+             server.start();
+             server.join();
++
+         } catch (Exception ex) {
+             logger.error("Error occurred while starting Jetty", ex);
++            ex.printStackTrace();
+             System.exit(1);
+-        }
+-
+-        finally {
+-            server.destroy();
++        } finally {
++            if (server != null) {
++                try {
++                    server.destroy();
++                } catch (Exception destroyEx) {
++                    logger.error("Error while shutting down the server", destroyEx);
++                    destroyEx.printStackTrace();
++                }
++            }
+         }
+     }
+ }
++
++
++
+diff --git a/src/main/java/com/lumistream/jersey/resources/UserResources.java b/src/main/java/com/lumistream/jersey/resources/UserResources.java
+index 0835150..0726864 100644
+--- a/src/main/java/com/lumistream/jersey/resources/UserResources.java
++++ b/src/main/java/com/lumistream/jersey/resources/UserResources.java
+@@ -1,11 +1,15 @@
+ package com.lumistream.jersey.resources;
+ 
+ import javax.ws.rs.*;
++import javax.ws.rs.core.Response;
+ import javax.ws.rs.core.MediaType;
+ 
+ import com.lumistream.jersey.user.User;
+ import com.lumistream.jersey.user.UserSupervisor;
+ 
++import com.google.firebase.auth.FirebaseAuth;
++
++
+ @Path("media/{username}/{pass}")
+ 
+ public class UserResources {
+@@ -20,13 +24,13 @@ public class UserResources {
+         User.addUser(username, userpass, URL);
+     }
+ 
+-    @Path("/login")
++/*    @Path("/login")
+     @POST
+     public void login(@PathParam("username") String username, @PathParam("pass") String userpass) {
+ 
+         UserSupervisor.loginUser(username, userpass, APP1, URL);
+-
+     }
++*/
+ 
+     @Path("/logout")
+     @POST
+@@ -40,4 +44,29 @@ public class UserResources {
+         User.deleteUser(username, URL);
+     } 
+ 
+-}
+\ No newline at end of file
++	
++
++    @Path("/login")
++    @POST
++    @Consumes(MediaType.APPLICATION_JSON)
++    @Produces(MediaType.APPLICATION_JSON)
++    public Response login(User user) {
++        try {
++            // validate user credentials
++           // UserSupervisor supervisor = UserSupervisor.getInstance();
++            boolean isValid = User.Authenticate(user.getUsername(), user.getPassword(), URL);
++
++            if (isValid) {
++                // Generate a Firebase custom token
++                String customToken = FirebaseAuth.getInstance().createCustomToken(user.getUsername());
++
++                // return token 
++                // Invalid 
++                return Response.status(Response.Status.UNAUTHORIZED).entity("Invalid username or password").build();
++            }
++        } catch (Exception e) {
++            e.printStackTrace();
++            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("Error during login").build();
++        }
++    }
++}
+diff --git a/src/main/java/com/lumistream/jersey/user/User.java b/src/main/java/com/lumistream/jersey/user/User.java
+index 1d11e4e..0ee409b 100644
+--- a/src/main/java/com/lumistream/jersey/user/User.java
++++ b/src/main/java/com/lumistream/jersey/user/User.java
+@@ -14,18 +14,56 @@ import org.bouncycastle.crypto.params.Argon2Parameters;
+ 
+ public class User {
+ 
++    private String username;
++    private String password;
++
+     private static final Integer APP1 = 1;
+     private static final Random RANDOM = new SecureRandom();
+ 
++    // contrutor
++    public User() {
++    }
++
++    public User(String username, String password) {
++        this.username = username;
++        this.password = password;
++    }
++
++    // getters and setters
++    public String getUsername() {
++        return username;
++    }
++
++    public void setUsername(String username) {
++        this.username = username;
++    }
++
++    public String getPassword() {
++        return password;
++    }
++
++    public void setPassword(String password) {
++        this.password = password;
++    }
++
++    // metodos
+     public static void addUser(String username, String password, String url) {
+         String salt = User.getSalt();
+         String encrypted_pass = encryptPass(password, salt);
+-        String sql = "INSERT INTO credential(name, password, salt) VALUES(" + username + ", " + encrypted_pass + ", "
++        /* String sql = "INSERT INTO credential(name, password, salt) VALUES(" + username + ", " + encrypted_pass + ", "
+                 + salt + ")";
++        */
++        String sql = "INSERT INTO credential (name, password, salt) VALUES (?, ?, ?)";
++
+ 
+         try (Connection conn = DriverManager.getConnection(url)) {
+             PreparedStatement pstm = conn.prepareStatement(sql);
++
++            pstm.setString(1, username);
++            pstm.setString(2, encrypted_pass);
++            pstm.setString(3, salt);
+             pstm.executeUpdate();
++
+         } catch (SQLException e) {
+             System.out.println(e.getMessage());
+         }
+@@ -34,11 +72,15 @@ public class User {
+     public static void deleteUser(String username, String url) {
+ 
+         if (UserSupervisor.isUserLoggedIn(username) == APP1) {
+-            String sql = "DELETE FROM credential WHERE name = " + username;
++           // String sql = "DELETE FROM credential WHERE name = " + username;
++            String sql = "DELETE FROM credential WHERE name = ?";
+ 
+             try (Connection conn = DriverManager.getConnection(url)) {
+                 PreparedStatement pstm = conn.prepareStatement(sql);
++
++                pstm.setString(1, username);
+                 pstm.executeUpdate();
++
+             } catch (SQLException e) {
+                 System.out.println(e.getMessage());
+             }
+@@ -75,19 +117,37 @@ public class User {
+     }
+ 
+     public static Boolean Authenticate(String name, String password, String url) {
+-        String query = "SELECT (password, salt) from credential where name = " + name;
++        //String query = "SELECT (password, salt) from credential where name = " + name;
++        String query = "SELECT password, salt FROM credential WHERE name = ?";
+ 
+         try (Connection conn = DriverManager.getConnection(url)) {
+             PreparedStatement pstm = conn.prepareStatement(query);
++
++            pstm.setString(1, name);
+             ResultSet res = pstm.executeQuery();
+-            String hash = res.getString("password");
+-            String salt = res.getString("salt");
+-            String salted_pass = password + salt;
+-            String hashed_pass = User.hash(salted_pass);
+-            return hashed_pass.equals(hash);
++       	    if (res.next()) {
++                String hash = res.getString("password");
++                String salt = res.getString("salt");
++               // String salted_pass = password + salt;
++                ////String hashed_pass = User.hash(salted_pass);
++                //String hashed_pass = hash(password + salt);
++
++                System.out.println("Found user: " + name);
++                System.out.println("hash: " + hash);
++                System.out.println("Salt: " + salt);
++
++                String hashed_pass = encryptPass(password, salt);
++                
++                System.out.println("Computed hash: " + hashed_pass);
++                return hashed_pass.equals(hash);
++              
++            } else {
++                System.out.println("User not found: " + name);
++            } 
++
+         } catch (SQLException e) {
+             System.out.println(e.getMessage());
+         }
+-        return true;
++        return false;    // if error or user not found
+     }
+ }
