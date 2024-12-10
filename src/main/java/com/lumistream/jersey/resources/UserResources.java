@@ -61,6 +61,8 @@ public class UserResources {
                 String customToken = FirebaseAuth.getInstance().createCustomToken(user.getUsername());
 
                 // return token 
+		return Response.ok(new TokenResponse(customToken)).build();
+            } else {
                 // Invalid 
                 return Response.status(Response.Status.UNAUTHORIZED).entity("Invalid username or password").build();
             }

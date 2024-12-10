@@ -1,2 +1,8 @@
 *.class
 .gradle/
+*.class
+*.gradle
+build/libs/jersey-with-embedded-jetty.jar
+build/distributions/*.ta
+build/distributions/*.tar
+build/distributions/*.zip
