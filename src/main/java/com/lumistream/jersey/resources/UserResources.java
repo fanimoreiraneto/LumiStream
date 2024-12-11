@@ -10,21 +10,22 @@ import com.lumistream.jersey.user.UserSupervisor;
 import com.google.firebase.auth.FirebaseAuth;
 
 
-@Path("media/{username}/{pass}")
+@Path("user")
 
 public class UserResources {
 
     private final Integer APP1 = 1;
-    // private static String URL = "jdbc:sqlite:LumiStream/src/main/databases/user.db";
-    private static String URL = "jdbc:sqlite:/src/main/databases/user.db";
+    private static String URL = "jdbc:sqlite:/home/fanineto1/LumiStream/src/main/databases/user.db";
+    //private static String URL = "jdbc:sqlite:/src/main/databases/user.db";
 
     @Path("/addUser")
     @POST
-    public void addUser(@PathParam("username") String username, @PathParam("pass") String userpass) {
-        User.addUser(username, userpass, URL);
+    public Response addUser(User user) {
+        User.addUser(user.getUsername(), user.getPassword(), URL);
+        return Response.ok("{\"status\":\"User added successfully\"}").build();
     }
 
-/*    @Path("/login")
+/*  @Path("/login")
     @POST
     public void login(@PathParam("username") String username, @PathParam("pass") String userpass) {
 
@@ -32,19 +33,21 @@ public class UserResources {
     }
 */
 
+
     @Path("/logout")
     @POST
-    public void logout(@PathParam("username") String username, @PathParam("pass") String userpass) {
-        UserSupervisor.logoutUser(username, userpass, APP1);
+    public Response logout(User user) {
+        UserSupervisor.logoutUser(user.getUsername(), user.getPassword(), APP1);
+        return Response.ok("{\"status\":\"User logged out successfully\"}").build();
     }
 
     @Path("/delete")
     @POST
-    public void deleteUser(@PathParam("username") String username, @PathParam("pass") String userpass) {
-        User.deleteUser(username, URL);
+    public Response deleteUser(User user) {
+        User.deleteUser(user.getUsername(), URL);
+        return Response.ok("{\"status\":\"User logged out successfully\"}").build();
     } 
 
-	
 
     @Path("/login")
     @POST
@@ -61,7 +64,7 @@ public class UserResources {
                 String customToken = FirebaseAuth.getInstance().createCustomToken(user.getUsername());
 
                 // return token 
-		return Response.ok(new TokenResponse(customToken)).build();
+                return Response.ok(new TokenResponse(customToken)).build();
             } else {
                 // Invalid 
                 return Response.status(Response.Status.UNAUTHORIZED).entity("Invalid username or password").build();
@@ -72,3 +75,4 @@ public class UserResources {
         }
     }
 }
+

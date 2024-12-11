@@ -20,6 +20,7 @@ public class JerseyApplication {
     public static void main(String[] args) {
         Server server = null;
 
+
         try {
             // Initialize Firebase
             FirebaseInitializer.initializeFirebase();
@@ -37,6 +38,7 @@ public class JerseyApplication {
             connector.setPort(8080); // Set the port to 8080
             server.addConnector(connector);  // add connector to the server
 
+	    
             // create the servletContexthandler
             ServletContextHandler servletContextHandler = new ServletContextHandler(NO_SESSIONS);
             servletContextHandler.setContextPath("/");

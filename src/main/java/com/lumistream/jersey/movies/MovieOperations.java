@@ -10,7 +10,8 @@ import java.util.List;
 
 public class MovieOperations {
    	//private static String SQL = "jdbc:sqlite:LumiStream/src/main/databases/movies.db";
-	private static String SQL = "jdbc:sqlite:src/main/databases/movies.db";
+	private static String SQL =  "jdbc:sqlite:/home/fanineto1/LumiStream/src/main/databases/movies.db";
+	
 	
     public static Movie getMovie(String title){
         Movie movie = null;

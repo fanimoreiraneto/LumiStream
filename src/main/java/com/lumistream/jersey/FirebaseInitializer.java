@@ -15,7 +15,7 @@ public class FirebaseInitializer {
             // Configure Firebase options
             FirebaseOptions options = new FirebaseOptions.Builder()
                 .setCredentials(GoogleCredentials.fromStream(serviceAccount))
-                .setStorageBucket("lumistream-fani.appspot.com") // Replace with your bucket name
+                .setStorageBucket("lumistream-fani.firebasestorage.app") 
                 .build();
 
             // Initialize Firebase

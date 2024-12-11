@@ -1,3 +1,4 @@
+
 package com.lumistream.jersey.user;
 
 import java.sql.DriverManager;
@@ -20,7 +21,7 @@ public class User {
     private static final Integer APP1 = 1;
     private static final Random RANDOM = new SecureRandom();
 
-    // contrutor
+    // construtor
     public User() {
     }
 
@@ -50,9 +51,7 @@ public class User {
     public static void addUser(String username, String password, String url) {
         String salt = User.getSalt();
         String encrypted_pass = encryptPass(password, salt);
-        /* String sql = "INSERT INTO credential(name, password, salt) VALUES(" + username + ", " + encrypted_pass + ", "
-                + salt + ")";
-        */
+        
         String sql = "INSERT INTO credential (name, password, salt) VALUES (?, ?, ?)";
 
 
@@ -64,7 +63,8 @@ public class User {
             pstm.setString(3, salt);
             pstm.executeUpdate();
 
-        } catch (SQLException e) {
+	    System.out.println("User added to database: " + username);
+	} catch (SQLException e) {
             System.out.println(e.getMessage());
         }
     }
@@ -72,7 +72,6 @@ public class User {
     public static void deleteUser(String username, String url) {
 
         if (UserSupervisor.isUserLoggedIn(username) == APP1) {
-           // String sql = "DELETE FROM credential WHERE name = " + username;
             String sql = "DELETE FROM credential WHERE name = ?";
 
             try (Connection conn = DriverManager.getConnection(url)) {
@@ -116,24 +115,23 @@ public class User {
         return s_hash;
     }
 
+    
     public static Boolean Authenticate(String name, String password, String url) {
-        //String query = "SELECT (password, salt) from credential where name = " + name;
-        String query = "SELECT password, salt FROM credential WHERE name = ?";
+         String query = "SELECT password, salt FROM credential WHERE name = ?";
 
         try (Connection conn = DriverManager.getConnection(url)) {
             PreparedStatement pstm = conn.prepareStatement(query);
-
             pstm.setString(1, name);
+
             ResultSet res = pstm.executeQuery();
-       	    if (res.next()) {
+            if (res.next()) {
                 String hash = res.getString("password");
                 String salt = res.getString("salt");
                // String salted_pass = password + salt;
-                ////String hashed_pass = User.hash(salted_pass);
-                //String hashed_pass = hash(password + salt);
-
+               //String hashed_pass = User.hash(salted_pass);
+                
                 System.out.println("Found user: " + name);
-                System.out.println("hash: " + hash);
+                System.out.println("Hash: " + hash);
                 System.out.println("Salt: " + salt);
 
                 String hashed_pass = encryptPass(password, salt);
@@ -143,11 +141,36 @@ public class User {
               
             } else {
                 System.out.println("User not found: " + name);
-            } 
+            }
 
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            System.out.println("Error during authentication: " + e.getMessage());
         }
         return false;    // if error or user not found
     }
+
+/*
+public static void main(String[] args) {
+  //  String dbUrl =  "jdbc:sqlite:LumiStream/src/main/databases/user.db";
+     String dbUrl = "jdbc:sqlite:/home/fanineto1/LumiStream/src/main/databases/user.db";
+    // Example data
+    String username = "testuser";
+    String password = "testpassword";
+
+    // Insert user into the database
+    addUser(username, password, dbUrl);
+    System.out.println("User added successfully!");
+
+    // Verify authentication
+    boolean isAuthenticated = Authenticate(username, password, dbUrl);
+    if (isAuthenticated) {
+        System.out.println("Authentication successful!");
+    } else {
+        System.out.println("Authentication failed.");
+    }
 }
+*/
+
+}
+
+
