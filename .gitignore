@@ -6,3 +6,4 @@ build/libs/jersey-with-embedded-jetty.jar
 build/distributions/*.tar
 build/distributions/*.zip
 /build/tmp/compileJava/
+config/lumistream-fani-firebase-adminsdk-p89ku-a5a22091a4.json
