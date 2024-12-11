@@ -5,3 +5,4 @@
 build/libs/jersey-with-embedded-jetty.jar
 build/distributions/*.tar
 build/distributions/*.zip
+/build/tmp/compileJava/
